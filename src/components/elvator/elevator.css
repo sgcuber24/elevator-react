@@ -1,0 +1,8 @@
+.elevator {
+	width: 100px;
+	height: 100px;
+	border: 6px solid black;
+	position: absolute;
+	bottom: 0;
+	left: 35%;
+}

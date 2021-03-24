@@ -1,25 +1,41 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import Elevator from './components/elvator/Elevator';
+import Floors from './components/floors/Floors';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [position, setPosition] = useState(0);
+	const [stack, setStack] = useState([]);
+	const [flag, setFlag] = useState(true);
+	useEffect(() => {
+		const timer = setInterval(() => {
+			let removedElement;
+			if (flag === true) {
+				removedElement = Math.min(...stack);
+				if (removedElement === Math.max(...stack)) {
+					setFlag(false);
+				}
+			} else {
+				removedElement = Math.max(...stack);
+				if (removedElement === Math.min(...stack)) {
+					setFlag(true);
+				}
+			}
+
+			setPosition(removedElement);
+			setStack(stack.filter(p => p !== removedElement));
+		}, 2000);
+		return () => clearInterval(timer);
+	});
+	const positionChangeHandler = position => {
+		setStack(prev => [...prev, position]);
+	};
+	return (
+		<div className='App'>
+			<Floors positionChangeHandler={positionChangeHandler} />
+			<Elevator position={position} />
+		</div>
+	);
 }
 
 export default App;
