@@ -24,7 +24,7 @@ function App() {
 
 			setPosition(removedElement);
 			setStack(stack.filter(p => p !== removedElement));
-		}, 2000);
+		}, 1000);
 		return () => clearInterval(timer);
 	});
 	const positionChangeHandler = position => {
